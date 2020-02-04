@@ -21,7 +21,7 @@ trainer_collection = []
 trainers_name.each do |name|
   trainer_collection << Trainer.create(name: name)
 end
- 
+
 trainer_collection.each do |trainer|
   team_size = (SecureRandom.random_number(6) + 1).floor
  
