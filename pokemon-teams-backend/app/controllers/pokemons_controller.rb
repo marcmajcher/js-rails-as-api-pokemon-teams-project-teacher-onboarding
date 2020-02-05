@@ -1,3 +1,5 @@
+require 'faker'
+
 class PokemonsController < ApplicationController
   before_action :render_pokemon, only: [:show, :destroy]
 
@@ -12,6 +14,13 @@ class PokemonsController < ApplicationController
 
   def destroy
     @pokemon.destroy
+  end
+
+  def create
+    trainer_id = JSON.parse(request.raw_post)["trainer_id"].to_i
+    name = Faker::Name.first_name
+    species = Faker::Games::Pokemon.name
+    render json: Pokemon.create(nickname: name, species: species, trainer_id: trainer_id)
   end
 
   private

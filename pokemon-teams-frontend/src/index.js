@@ -18,7 +18,17 @@ function init() {
 }
 
 function addPokemon(id) {
-  console.log('adding poke for ', id);
+  if (TRAINERS[id].pokemons.length < 6) {
+    fetch(POKEMONS_URL, {
+      method: 'POST',
+      body: JSON.stringify({ trainer_id: id }),
+    })
+      .then(res => res.json())
+      .then(json => {
+        TRAINERS[id].pokemons.push(json);
+        renderTrainerTeam(id);
+      });
+  }
 }
 
 function releasePokemon(trainerId, pokeId) {
@@ -26,12 +36,11 @@ function releasePokemon(trainerId, pokeId) {
     e => e.id !== pokeId
   );
   renderTrainerTeam(trainerId);
-  fetch(POKEMONS_URL, {
+  fetch(`${POKEMONS_URL}/${pokeId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ id: pokeId }),
   });
 }
 
