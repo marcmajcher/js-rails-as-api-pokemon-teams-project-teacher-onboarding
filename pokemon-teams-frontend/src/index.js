@@ -19,7 +19,6 @@ function init() {
 
 function addPokemon(id) {
   console.log('adding poke for ', id);
-  
 }
 
 function releasePokemon(trainerId, pokeId) {
@@ -27,7 +26,13 @@ function releasePokemon(trainerId, pokeId) {
     e => e.id !== pokeId
   );
   renderTrainerTeam(trainerId);
-  // TBD add API call to DELETE
+  fetch(POKEMONS_URL, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id: pokeId }),
+  });
 }
 
 function renderTrainers() {

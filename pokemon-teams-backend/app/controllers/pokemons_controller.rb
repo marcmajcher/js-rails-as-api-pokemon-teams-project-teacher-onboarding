@@ -1,5 +1,5 @@
 class PokemonsController < ApplicationController
-  before_action :render_pokemon, only: [:show]
+  before_action :render_pokemon, only: [:show, :destroy]
 
   def index
     @pokemons = Pokemon.all
@@ -8,6 +8,10 @@ class PokemonsController < ApplicationController
 
   def show
     render json: @pokemon
+  end
+
+  def destroy
+    @pokemon.destroy
   end
 
   private
